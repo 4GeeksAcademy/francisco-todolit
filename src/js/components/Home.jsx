@@ -1,27 +1,49 @@
-import React from "react";
+import { useState } from "react";
+import React  from "react";
 
 //include images into your bundle
 import rigoImage from "../../img/rigo-baby.jpg";
 
+
 //create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-            
+	const [ inputValue , setInputValue ] = useState("");
+	const [ todos , setTodos] = useState([]);
+	//add into array-> contact
+	//Dalete from array -> filter
+	//Update -> map
 
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
+		return (
+		
+			<div className="lista" >
+				<h1>Lista de Nombres </h1>
+				<ul className= "lista" style={{ listStyle:"none"}}>
+					<li>
+						<input 
+						type="text" 
+						onChange={(e) => setInputValue(e.target.value)} 
+						value={inputValue}
+						onKeyPress={(e) => {
+							if(e.key ==="Enter" ){
+								console.log("Enter was pressed");
+								setTodos(todos.concat(inputValue));
+								setInputValue("");
+							 }
+
+						}}
+						style={{border:"none" , width:"100%"}} 
+						placeholder="Añadir Nombre...."/>
+						</li>
+						{todos.map((item, index)=>(
+
+							<li>{item}<i class="fa-solid fa-trash"onDoubleClick={()=> setTodos( todos.filter((t, currentIndex)=> index!= currentIndex))}></i></li>
+						))}
+						
+						
+				</ul>
+				<div>{todos.length}</div>
+			</div>
+	
 	);
 };
 
